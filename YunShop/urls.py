@@ -39,6 +39,7 @@ urlpatterns = [
 
     re_path(r'docs/', include_docs_urls(title="渣渣网")),
 
+    re_path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # JWF 认证接口
     path(r'login/', obtain_jwt_token),
 

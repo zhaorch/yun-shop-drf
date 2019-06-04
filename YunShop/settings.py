@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'DjangoUeditor',
     'xadmin',
     'crispy_forms',
+    'corsheaders',
     'goods.apps.GoodsConfig',
     'django_filters',
 ]
@@ -60,7 +61,36 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+#CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = (
+#       'http://10.33.2.107:8000',
+# )
+
+# CORS_ALLOW_METHODS = (
+#     'DELETE',
+#     'GET',
+#     'OPTIONS',
+#     'PATCH',
+#     'POST',
+#     'PUT',
+#     'VIEW',
+# )
+#
+# CORS_ALLOW_HEADERS = (
+#     'XMLHttpRequest',
+#     'X_FILENAME',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+# )
+
 ROOT_URLCONF = 'YunShop.urls'
 
 TEMPLATES = [
@@ -93,7 +123,7 @@ DATABASES = {
         'USER':'root',
         'PASSWORD':'root',
         'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'PORT':'3308',
     'OPTIONS': { 'init_command': 'SET default_storage_engine=INNODB;' }
     }
 }
