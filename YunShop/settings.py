@@ -29,7 +29,7 @@ SECRET_KEY = 'r9pme$6axk=9-o5h+69jkg2l#tm+%@i=2hr+xr%k2_#0)rs=&-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -59,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'YunShop.urls'
 
 TEMPLATES = [
@@ -92,7 +93,7 @@ DATABASES = {
         'USER':'root',
         'PASSWORD':'root',
         'HOST':'127.0.0.1',
-        'PORT':'3308',
+        'PORT':'3306',
     'OPTIONS': { 'init_command': 'SET default_storage_engine=INNODB;' }
     }
 }
