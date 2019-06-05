@@ -29,6 +29,23 @@ class ZRCPermission(permissions.BasePermission):
         return True
 
 
+class CommonPermission(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        a = request.resolver_match.url_name
+        return request.user.is_superuser == 1
+
+    def has_object_permission(self, request, view, obj):
+        # 任何请求都允许读取权限，
+        # 所以我们总是允许 GET，HEAD 或 OPTIONS 请求。
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        #return obj.id == request.user.id
+        return request.user.is_superuser == 1
+
+
 class GoodsPagination(PageNumberPagination):
     page_size = 5
     page_size_query_param = 'page_size'
@@ -45,8 +62,9 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 class GoodsViewSet(viewsets.ModelViewSet):
-    authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication,)
-    permission_classes = (permissions.IsAdminUser,ZRCPermission)
+    authentication_classes = (authentication.BasicAuthentication, authentication.SessionAuthentication,)
+    #permission_classes = (permissions.IsAuthenticatedOrReadOnly,CommonPermission)
+    permission_classes = (CommonPermission,)
 
     queryset = Goods.objects.all().order_by('category','-created_time').select_related('category')
     serializer_class = GoodsSerializer
