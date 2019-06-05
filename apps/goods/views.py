@@ -6,6 +6,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 from .models import Category,Goods
 from .serializers import CategorySerializer,GoodsSerializer
@@ -47,13 +48,13 @@ class CommonPermission(permissions.BasePermission):
 
 
 class GoodsPagination(PageNumberPagination):
-    page_size = 5
+    page_size = 10
     page_size_query_param = 'page_size'
     page_query_param = "page"
     max_page_size = 100
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(CacheResponseMixin,viewsets.ModelViewSet):
     authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication,)
     permission_classes = (permissions.IsAdminUser,ZRCPermission)
 
@@ -61,7 +62,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
 
 
-class GoodsViewSet(viewsets.ModelViewSet):
+class GoodsViewSet(CacheResponseMixin,viewsets.ModelViewSet):
     authentication_classes = (authentication.BasicAuthentication, authentication.SessionAuthentication,)
     #permission_classes = (permissions.IsAuthenticatedOrReadOnly,CommonPermission)
     permission_classes = (CommonPermission,)
