@@ -1,16 +1,20 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets
+from rest_framework import viewsets,status
 from rest_framework import authentication,permissions
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
+from rest_framework.decorators import detail_route, list_route
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
 
 from .models import Category,Goods
 from .serializers import CategorySerializer,GoodsSerializer
 from .filters import GoodsFilter
+
 
 # Create your views here.
 
@@ -74,4 +78,22 @@ class GoodsViewSet(CacheResponseMixin,viewsets.ModelViewSet):
     filter_class = GoodsFilter
     search_fields = ('name', 'goods_desc')
     ordering_fields = ('price',)
+
+    # /goods/{pk}/detailInfo/
+    @detail_route(methods=['get'])
+    def detailInfo(self, request, pk=None):
+        goods = get_object_or_404(Goods, pk=pk)
+        result = {
+            'name': goods.name,
+            'price': goods.price
+        }
+
+        return Response(result, status=status.HTTP_200_OK)
+
+    # /goods/goodsName/
+    @list_route(methods=['get'],url_path='goodsName')
+    def all_goods(self, request):
+        music = Goods.objects.values_list('name', flat=True).distinct()
+        return Response(music, status=status.HTTP_200_OK)
+
 
