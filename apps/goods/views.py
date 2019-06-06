@@ -87,7 +87,6 @@ class GoodsViewSet(CacheResponseMixin,viewsets.ModelViewSet):
             'name': goods.name,
             'price': goods.price
         }
-
         return Response(result, status=status.HTTP_200_OK)
 
     # /goods/goodsName/
