@@ -23,6 +23,7 @@ from rest_framework.documentation import include_docs_urls
 
 from YunShop.settings import MEDIA_ROOT
 from goods.views import CategoryViewSet,GoodsViewSet
+from goods.views_study import GoodsListView
 
 router = routers.DefaultRouter()
 router.register(r'category', CategoryViewSet)
@@ -44,4 +45,7 @@ urlpatterns = [
     path(r'login/', obtain_jwt_token),
 
     path('', include(router.urls)),
+
+    #学习
+    path('study/goods', GoodsListView.as_view(),name='goods-list'),
 ]
