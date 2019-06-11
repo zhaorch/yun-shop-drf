@@ -2,6 +2,7 @@ __author__ = 'zrc'
 __date__ = '2019/6/4 8:28'
 
 from rest_framework import serializers
+from DjangoUeditor.models import UEditorField
 from django.db.models import Q
 
 from .models import Category,Goods
@@ -48,6 +49,20 @@ class GoodsSerializer(serializers.ModelSerializer):
     category = CategorySerializerName()
     created_time = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
     updated_time = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
+
     class Meta:
         model = Goods
         fields = "__all__"
+
+
+class GoodsSerializerBase(serializers.Serializer):
+    name = serializers.CharField(max_length=100)
+    category = serializers.CharField()
+    price = serializers.FloatField(default=0)
+    goods_desc = serializers.CharField()
+    goods_front_image = serializers.ImageField()
+    created_time = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
+    updated_time = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
+
+    def create(self, validated_data):
+        return Goods.objects.create(**validated_data)

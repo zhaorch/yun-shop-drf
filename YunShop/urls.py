@@ -15,26 +15,35 @@ Including another URLconf
 """
 from django.contrib import admin
 import xadmin
-from django.urls import path,re_path,include
+from django.urls import path, re_path, include
 from django.views.static import serve
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
 
 from YunShop.settings import MEDIA_ROOT
-from goods.views import CategoryViewSet,GoodsViewSet
-from goods.views_study import GoodsListView
+from goods.views import CategoryViewSet, GoodsViewSet
+from goods.views_study import GoodsListView, GoodsListView2, GoodsListView3,GoodsListView4
+from goods.views_study import GoodsListViewSet1,GoodsListViewSet3,GoodsListViewSet4,GoodsListViewSet5
 
 router = routers.DefaultRouter()
 router.register(r'category', CategoryViewSet)
 router.register(r'goods', GoodsViewSet)
+router.register(r'study/goodsViewSet2', GoodsListViewSet1)
+router.register(r'study/goodsViewSet3', GoodsListViewSet3, 'study_goodsViewSet3')
+router.register(r'study/goodsViewSet4', GoodsListViewSet4, 'study_goodsViewSet4')
+router.register(r'study/goodsViewSet5', GoodsListViewSet5, 'study_goodsViewSet5')
+
+study_goods = GoodsListViewSet1.as_view({
+    'get': 'list'
+})
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
 
-    #配置上传文件的访问处理函数
-    re_path(r'^media/(?P<path>.*)$',  serve, {"document_root":MEDIA_ROOT}),
+    # 配置上传文件的访问处理函数
+    re_path(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
 
     re_path(r'^ueditor/', include('DjangoUeditor.urls')),
 
@@ -46,6 +55,10 @@ urlpatterns = [
 
     path('', include(router.urls)),
 
-    #学习
-    path('study/goods', GoodsListView.as_view(),name='goods-list'),
+    # 学习
+    path('study/goods', GoodsListView.as_view(), name='goods-list'),
+    path('study/goods2', GoodsListView2.as_view(), name='goods-list2'),
+    path('study/goods3', GoodsListView3.as_view(), name='goods-list3'),
+    path('study/goods4', GoodsListView4.as_view(), name='goods-list4'),
+    path('study/goodsViewSet', study_goods, name='goods-list5'),
 ]
