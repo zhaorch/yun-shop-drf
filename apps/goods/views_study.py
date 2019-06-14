@@ -15,7 +15,7 @@ from .models import Goods
 from .filters import GoodsFilter
 
 
-class GoodsListView(View):
+class GoodsListView1(View):
     def get(self, request):
         goods = Goods.objects.all()[:5]
 

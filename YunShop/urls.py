@@ -23,13 +23,13 @@ from rest_framework.documentation import include_docs_urls
 
 from YunShop.settings import MEDIA_ROOT
 from goods.views import CategoryViewSet, GoodsViewSet
-from goods.views_study import GoodsListView, GoodsListView2, GoodsListView3,GoodsListView4
+from goods.views_study import GoodsListView1, GoodsListView2, GoodsListView3,GoodsListView4
 from goods.views_study import GoodsListViewSet1,GoodsListViewSet3,GoodsListViewSet4,GoodsListViewSet5
 
 router = routers.DefaultRouter()
-router.register(r'category', CategoryViewSet)
-router.register(r'goods', GoodsViewSet)
-router.register(r'study/goodsViewSet2', GoodsListViewSet1)
+router.register(r'category', CategoryViewSet, 'category')
+router.register(r'goods', GoodsViewSet, 'goods')
+router.register(r'study/goodsViewSet2', GoodsListViewSet1, 'study_goodsViewSet2')
 router.register(r'study/goodsViewSet3', GoodsListViewSet3, 'study_goodsViewSet3')
 router.register(r'study/goodsViewSet4', GoodsListViewSet4, 'study_goodsViewSet4')
 router.register(r'study/goodsViewSet5', GoodsListViewSet5, 'study_goodsViewSet5')
@@ -56,7 +56,7 @@ urlpatterns = [
     path('', include(router.urls)),
 
     # 学习
-    path('study/goods', GoodsListView.as_view(), name='goods-list'),
+    path('study/goods1', GoodsListView1.as_view(), name='goods-list'),
     path('study/goods2', GoodsListView2.as_view(), name='goods-list2'),
     path('study/goods3', GoodsListView3.as_view(), name='goods-list3'),
     path('study/goods4', GoodsListView4.as_view(), name='goods-list4'),
