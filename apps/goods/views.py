@@ -68,9 +68,10 @@ class CategoryViewSet(CacheResponseMixin,viewsets.ModelViewSet):
 
 
 class GoodsViewSet(CacheResponseMixin,viewsets.ModelViewSet):
-    authentication_classes = (authentication.BasicAuthentication, authentication.SessionAuthentication,)
+    #authentication_classes = (authentication.BasicAuthentication, authentication.SessionAuthentication,)
+    authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication,)
     #permission_classes = (permissions.IsAuthenticatedOrReadOnly,CommonPermission)
-    permission_classes = (CommonPermission,)
+    permission_classes = (permissions.IsAdminUser,)
 
     queryset = Goods.objects.all().order_by('category','-created_time').select_related('category')
     serializer_class = GoodsSerializer
