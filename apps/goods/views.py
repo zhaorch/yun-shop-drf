@@ -1,18 +1,19 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 from rest_framework import viewsets,status
 from rest_framework import authentication,permissions
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
+from rest_framework import filters,mixins
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from rest_framework.decorators import detail_route, list_route
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
 from .models import Category,Goods
-from .serializers import CategorySerializer,GoodsSerializer
+from .serializers import CategorySerializer,GoodsSerializer,UserSerializer
 from .filters import GoodsFilter
 
 
@@ -96,3 +97,15 @@ class GoodsViewSet(CacheResponseMixin,viewsets.ModelViewSet):
         return Response(music, status=status.HTTP_200_OK)
 
 
+class UserViewSet(viewsets.ModelViewSet):
+    authentication_classes = (authentication.BasicAuthentication, authentication.SessionAuthentication,)
+    permission_classes = (CommonPermission,)
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    # /users/{pk}/userInfo/
+    @detail_route(methods=['get'])
+    def userInfo(self, request, pk=None):
+        user =request.user
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data)

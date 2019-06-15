@@ -22,17 +22,19 @@ from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
 
 from YunShop.settings import MEDIA_ROOT
-from goods.views import CategoryViewSet, GoodsViewSet
+from goods.views import CategoryViewSet, GoodsViewSet, UserViewSet
 from goods.views_study import GoodsListView1, GoodsListView2, GoodsListView3,GoodsListView4
 from goods.views_study import GoodsListViewSet1,GoodsListViewSet3,GoodsListViewSet4,GoodsListViewSet5
 
 router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
 router.register(r'category', CategoryViewSet, 'category')
 router.register(r'goods', GoodsViewSet, 'goods')
 router.register(r'study/goodsViewSet2', GoodsListViewSet1, 'study_goodsViewSet2')
 router.register(r'study/goodsViewSet3', GoodsListViewSet3, 'study_goodsViewSet3')
 router.register(r'study/goodsViewSet4', GoodsListViewSet4, 'study_goodsViewSet4')
 router.register(r'study/goodsViewSet5', GoodsListViewSet5, 'study_goodsViewSet5')
+
 
 study_goods = GoodsListViewSet1.as_view({
     'get': 'list'
