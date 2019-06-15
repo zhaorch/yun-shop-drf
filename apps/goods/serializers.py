@@ -4,8 +4,9 @@ __date__ = '2019/6/4 8:28'
 from rest_framework import serializers
 from DjangoUeditor.models import UEditorField
 from django.db.models import Q
+from django.contrib.auth.models import AbstractUser
 
-from .models import Category,Goods
+from .models import Category, Goods
 
 
 class CategorySerializerName(serializers.ModelSerializer):
@@ -66,3 +67,12 @@ class GoodsSerializerBase(serializers.Serializer):
 
     def create(self, validated_data):
         return Goods.objects.create(**validated_data)
+
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('username','email')
