@@ -99,7 +99,7 @@ class GoodsViewSet(CacheResponseMixin,viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    authentication_classes = (authentication.BasicAuthentication, authentication.SessionAuthentication,)
+    authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication,)
     permission_classes = (CommonPermission,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
