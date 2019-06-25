@@ -25,6 +25,7 @@ from YunShop.settings import MEDIA_ROOT
 from goods.views import CategoryViewSet, GoodsViewSet, UserViewSet
 from goods.views_study import GoodsListView1, GoodsListView2, GoodsListView3,GoodsListView4
 from goods.views_study import GoodsListViewSet1,GoodsListViewSet3,GoodsListViewSet4,GoodsListViewSet5
+from goods.views_extension import GoodsViewSet2
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -34,6 +35,8 @@ router.register(r'study/goodsViewSet2', GoodsListViewSet1, 'study_goodsViewSet2'
 router.register(r'study/goodsViewSet3', GoodsListViewSet3, 'study_goodsViewSet3')
 router.register(r'study/goodsViewSet4', GoodsListViewSet4, 'study_goodsViewSet4')
 router.register(r'study/goodsViewSet5', GoodsListViewSet5, 'study_goodsViewSet5')
+
+router.register('goods-extension', GoodsViewSet2, 'goods-extension')
 
 
 study_goods = GoodsListViewSet1.as_view({

@@ -11,6 +11,7 @@ from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from rest_framework.decorators import detail_route, list_route
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from rest_framework_extensions.mixins import DetailSerializerMixin
 
 from .models import Category,Goods
 from .serializers import CategorySerializer,GoodsSerializer,UserSerializer
@@ -110,3 +111,5 @@ class UserViewSet(viewsets.ModelViewSet):
         user =request.user
         serializer = UserSerializer(user, many=False)
         return Response(serializer.data)
+
+

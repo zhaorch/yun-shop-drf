@@ -123,7 +123,7 @@ DATABASES = {
         'USER':'root',
         'PASSWORD':'root',
         'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'PORT':'3308',
     'OPTIONS': { 'init_command': 'SET default_storage_engine=INNODB;' }
     }
 }
@@ -192,7 +192,8 @@ REST_FRAMEWORK_EXTENSIONS = {
       'rest_framework_extensions.utils.default_object_cache_key_func',
     'DEFAULT_LIST_CACHE_KEY_FUNC':
       'rest_framework_extensions.utils.default_list_cache_key_func',
-    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 10   #秒为单位  自己 随意更改
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60,  #秒为单位  自己 随意更改
+    'DEFAULT_USE_CACHE': 'default',
 }
 
 CACHES = {
